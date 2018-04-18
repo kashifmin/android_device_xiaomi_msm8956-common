@@ -125,7 +125,7 @@ PRODUCT_PACKAGES += \
     libmm-qcamera \
     camera.device@1.0-impl \
     android.hardware.camera.provider@2.4-impl \
-    SnapdragonCamera
+    Snap
 
 # Connectivity Engine support (CNE)
 PRODUCT_PACKAGES += \
