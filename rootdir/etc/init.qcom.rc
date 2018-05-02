@@ -175,6 +175,9 @@ on boot
 
     # Vibrator intensity
     write /sys/class/timed_output/vibrator/vtg_level 1800
+    
+    # Set Wifi country code to fix 5ghz Hotspot
+    setprop ro.boot.wificountrycode US
 
 on post-fs
     start qseecomd
@@ -469,8 +472,6 @@ service wpa_supplicant /vendor/bin/hw/wpa_supplicant \
     socket wpa_wlan0 dgram 660 wifi wifi
     disabled
     oneshot
-    
-    setprop ro.boot.wificountrycode HK
 
 service loc_launcher /system/bin/loc_launcher
     #loc_launcher will start as root and set its uid to gps
