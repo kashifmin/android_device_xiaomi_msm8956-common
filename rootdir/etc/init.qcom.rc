@@ -241,6 +241,9 @@ on boot
     chown system system /dev/cpuset/camera-daemon
     chown system system /dev/cpuset/camera-daemon/tasks
     chmod 0664 /dev/cpuset/camera-daemon/tasks
+    
+    # Set Wifi country code to fix 5ghz Hotspot
+    setprop ro.boot.wificountrycode US
 
 on post-fs
     start qseecomd
@@ -647,7 +650,7 @@ service ril-daemon2 /vendor/bin/hw/rild -c 2
     group radio cache inet misc audio sdcard_r sdcard_rw diag oem_2901 log
     capabilities BLOCK_SUSPEND NET_ADMIN NET_RAW
 
-service charger /sbin/chargeonlymode
+service charger /charger
     class charger
     group system graphics
     seclabel u:r:charger:s0
