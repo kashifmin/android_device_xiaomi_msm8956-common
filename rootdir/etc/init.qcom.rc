@@ -534,6 +534,12 @@ service hci_filter_root /system/bin/wcnss_filter
     group bluetooth diag system
     disabled
 
+service config_bt_addr /system/vendor/bin/sh /system/vendor/bin/btnvtool -O
+    class core
+    user bluetooth
+    group bluetooth radio
+    oneshot
+
 service hciattach /system//vendor/bin/hci_qcomm_init -e
     class late_start
     user bluetooth
@@ -675,6 +681,12 @@ on charger
 on property:init.svc.surfaceflinger=restarting
     stop hwcomposer-2-1
     start hwcomposer-2-1
+
+on property:init.svc.recovery=running
+    trigger enable-low-power
+
+on property:dev.bootcomplete=1
+    trigger enable-low-power
 
 service time_daemon /system/vendor/bin/time_daemon
     class main
