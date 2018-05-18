@@ -1,8 +1,7 @@
-BOARD_PLATFORM_LIST := msm8909
-BOARD_PLATFORM_LIST += msm8916
-BOARD_PLATFORM_LIST += msm8917
+BOARD_PLATFORM_LIST := test
 BOARD_IPAv3_LIST := msm8998
-ifneq ($(call is-board-platform-in-list,$(BOARD_PLATFORM_LIST)),true)
+BOARD_IPAv3_LIST += sdm845
+ifeq ($(call is-board-platform-in-list,$(BOARD_PLATFORM_LIST)),true)
 ifneq (,$(filter $(QCOM_BOARD_PLATFORMS),$(TARGET_BOARD_PLATFORM)))
 ifneq (, $(filter aarch64 arm arm64, $(TARGET_ARCH)))
 
@@ -29,7 +28,7 @@ LOCAL_ADDITIONAL_DEPENDENCIES := $(TARGET_OUT_INTERMEDIATES)/KERNEL_OBJ/usr
 
 LOCAL_CFLAGS := -v
 LOCAL_CFLAGS += -DFEATURE_IPA_ANDROID
-LOCAL_CFLAGS += -DFEATURE_IPACM_HAL -Wall -Werror -Wno-error=macro-redefined
+LOCAL_CFLAGS += -DFEATURE_IPACM_HAL
 ifneq (,$(filter userdebug eng, $(TARGET_BUILD_VARIANT)))
 LOCAL_CFLAGS += -DDEBUG
 endif
@@ -42,7 +41,6 @@ filetoadd = bionic/libc/kernel/arch-arm/asm/posix_types.h
 LOCAL_CFLAGS += $(shell if [ -a $(filetoadd) ] ; then echo -include $(filetoadd) ; fi ;)
 filetoadd = bionic/libc/kernel/arch-arm/asm/byteorder.h
 LOCAL_CFLAGS += $(shell if [ -a $(filetoadd) ] ; then echo -include $(filetoadd) ; fi ;)
-
 
 LOCAL_SRC_FILES := IPACM_Main.cpp \
 		IPACM_EvtDispatcher.cpp \
