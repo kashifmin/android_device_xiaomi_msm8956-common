@@ -2519,7 +2519,7 @@ int32_t getExifLatitude(rat_t *latitude,
 {
     char str[30];
     snprintf(str, sizeof(str), "%f", value);
-    if(str != NULL) {
+    if(str[0] != '\0') {
         parseGPSCoordinate(str, latitude);
 
         //set Latitude Ref
@@ -2554,7 +2554,7 @@ int32_t getExifLongitude(rat_t *longitude,
 {
     char str[30];
     snprintf(str, sizeof(str), "%f", value);
-    if(str != NULL) {
+    if(str[0] != '\0') {
         parseGPSCoordinate(str, longitude);
 
         //set Longitude Ref
@@ -2589,7 +2589,7 @@ int32_t getExifAltitude(rat_t *altitude, char *altRef, double argValue)
 {
     char str[30];
     snprintf(str, sizeof(str), "%f", argValue);
-    if (str != NULL) {
+    if (str[0] != '\0') {
         double value = atof(str);
         *altRef = 0;
         if(value < 0){
@@ -2622,7 +2622,7 @@ int32_t getExifGpsDateTimeStamp(char *gpsDateStamp,
 {
     char str[30];
     snprintf(str, sizeof(str), "%lld", (long long int)value);
-    if(str != NULL) {
+    if(str[0] != '\0') {
         time_t unixTime = (time_t)atol(str);
         struct tm *UTCTimestamp = gmtime(&unixTime);
         if (UTCTimestamp != NULL) {
@@ -2967,6 +2967,9 @@ void QCamera3ReprocessChannel::streamCbRoutine(mm_camera_super_buf_t *super_fram
 
     memset(&dim, 0, sizeof(dim));
     memset(&offset, 0, sizeof(cam_frame_len_offset_t));
+
+    // dirty hack to fix unused param errors
+    if(stream != NULL) ALOGD("param stream is not null");
 
     if(!super_frame) {
          ALOGE("%s: Invalid Super buffer",__func__);
